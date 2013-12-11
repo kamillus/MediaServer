@@ -45,7 +45,7 @@ class MediaCollector(QThread):
             print e
                 
 class FileExtensionProcessor():
-    extensions = [".mkv", ".avi", ".mp4", ".mp3"]
+    extensions = [".mkv", ".avi", ".mp4", ".mp3", ".m4a"]
 
     def check_extension(self, extension):
         #print extension

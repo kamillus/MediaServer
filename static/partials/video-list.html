@@ -1,12 +1,16 @@
+<div>
+	<div class="input-append">
+	    <input class="span2" id="appendedInputButtons" type="text" ng-model="searchText">
+	    <button class="btn" type="button">Search</button>
+	</div>
 
-<div ng-if="loading">Loading..</div>
-
-<ul ng-repeat="(library_key, library) in libraries">
-	<li ng-repeat="(item_key, item) in library.library">
-		<a href="{{item.path}}">{{item.path}}</a>
-	</li>
-</ul>
-
+	<div ng-if="loading">Loading..</div>
+	<ul ng-repeat="(library_key, library) in libraries">
+		<li ng-repeat="(item_key, item) in library.library | filter:searchText | limitTo:100">
+			<a href="{{item.path}}">{{item.path}}</a>
+		</li>
+	</ul>
+</div>
 <!--
 {% for library in libraries.iteritems() %}
 	<ul id="library">
