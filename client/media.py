@@ -21,13 +21,14 @@ class MediaCollector(QThread):
             
     def process_path(self):
         extension_processor = FileExtensionProcessor()
+        media_library = []
         for dirpath, dirnames, filenames in os.walk(self.index_path):
             for filename in filenames:
                 try:
                     name, extension = os.path.splitext(filename)
                     if extension_processor.check_extension(extension):
                         print os.path.join(dirpath, filename)
-                        self.media_library.append(
+                        media_library.append(
                             {
                                 "filename": filename,
                                 "directory": dirpath,
@@ -37,6 +38,7 @@ class MediaCollector(QThread):
                         
                 except Exception as e:
                     print e
+            self.media_library = media_library
     
     def finish(self):
         try:

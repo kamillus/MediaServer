@@ -63,6 +63,7 @@ class Settings(object):
 
     def write_library(self, library, index):
         print "Writing to: " + self.get_library_file_path()
+        print index
         self.library[index] = {"library": library}
         f = open(self.get_library_file_path(), 'w')
         f.write(json.dumps(self.library))
