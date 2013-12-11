@@ -1,9 +1,7 @@
-ff
-{{libraries}}
 
-<ul>
-	<li ng-repeat="library in libraries">
-		<a href="{{value[1].library.path}}">{{value[1].library.path}}</a>
+<ul ng-repeat="(library_key, library) in libraries">
+	<li ng-repeat="(item_key, item) in library.library">
+		<a href="{{item.path}}">{{item.path}}</a>
 	</li>
 </ul>
 
