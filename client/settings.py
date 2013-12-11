@@ -37,16 +37,16 @@ class Settings(object):
         try:
             f = open(self.get_settings_file_path(), 'r')
             self.settings = json.loads(f.read())
-            self.file_paths = self.settings["file_paths"]
             f.close()
         except Exception as e:
             print e
             self.settings = {"file_paths": [os.path.expanduser("~")]}
-
             f = open(self.get_settings_file_path(), 'w')
             f.write(json.dumps(self.settings))
             f.close()
             
+        self.file_paths = self.settings["file_paths"]
+
     def get_media_library(self):
         try:
             f = open(self.get_library_file_path(), 'r')
@@ -55,7 +55,7 @@ class Settings(object):
         
         except Exception as e:
             print e
-            self.library = {[]}
+            self.library = {}
 
             f = open(self.get_library_file_path(), 'w')
             f.write(json.dumps(self.library))

@@ -11,7 +11,7 @@ class Application(object):
         self.app = QtGui.QApplication(sys.argv)
         
         self.settings = Settings()
-        self.media_collectors =[]
+        self.media_collectors = []
         self.media_collectors.append(MediaCollector(path=self.settings.file_paths[0]))
         self.media_collectors[0].finish_func = self.settings.write_library
         self.media_collectors[0].start()
