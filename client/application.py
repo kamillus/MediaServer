@@ -25,6 +25,7 @@ class Application(object):
         self.tray_widget = MediaTray(parent=self.main_widget, icon=icon)
         
         self.server = Server()
+        self.server.static_directory = self.settings.file_paths[0]
         self.server.start()
         
         self.tray_widget.show()
