@@ -1,0 +1,16 @@
+ff
+{{libraries}}
+
+<ul>
+	<li ng-repeat="library in libraries">
+		<a href="{{value[1].library.path}}">{{value[1].library.path}}</a>
+	</li>
+</ul>
+
+{% for library in libraries.iteritems() %}
+	<ul id="library">
+	{% for item in library.1.library %}
+	    <li><a href="{{ item.path }}">{{ item.path }}</a></li>
+	{% endfor %}
+	</ul>
+{% endfor %}
