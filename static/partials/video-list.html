@@ -1,14 +1,17 @@
 
+<div ng-if="loading">Loading..</div>
+
 <ul ng-repeat="(library_key, library) in libraries">
 	<li ng-repeat="(item_key, item) in library.library">
 		<a href="{{item.path}}">{{item.path}}</a>
 	</li>
 </ul>
 
+<!--
 {% for library in libraries.iteritems() %}
 	<ul id="library">
 	{% for item in library.1.library %}
 	    <li><a href="{{ item.path }}">{{ item.path }}</a></li>
 	{% endfor %}
 	</ul>
-{% endfor %}
+{% endfor %}-->
