@@ -30,8 +30,8 @@
 <div class="library_list">
 	<div class="container">
 		<div ng-if="loading">Loading..</div>
-		<ul ng-repeat="(library_key, library) in libraries">
-			<li ng-repeat="(item_key, item) in library.library | filter:searchText | limitTo:100">
+		<ul class="list-group" ng-repeat="(library_key, library) in libraries">
+			<li class="list-group-item" ng-repeat="(item_key, item) in library.library | filter:searchText | limitTo:100">
 				<a href="#/videos/{{item.path | encode_url}}">{{item.path}}</a>
 			</li>
 		</ul>
