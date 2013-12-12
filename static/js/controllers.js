@@ -7,7 +7,13 @@ controllers.controller('VideoListController', ['$scope', '$http', 'media_library
 	  media_library.get_library_data(function(data){
           $scope.libraries = data
           $scope.loading = false
-	  })
+		  
+		  $scope.total_count = 0
+	  
+		  angular.forEach($scope.libraries, function(library, library_key){
+			  $scope.total_count += library.library.length
+		  });
+	  })	  
   }]);
  
 controllers.controller('VideoDetailController', ['$scope', '$routeParams', 'media_library',
