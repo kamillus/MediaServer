@@ -37,8 +37,9 @@
 		    Play<span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu">
-			  <li>Download</li>
-			  <li>Play in VLC</li>
+			  <li><a href="http://{{host}}/static_media{{video.static_path}}">Download</a></li>
+			  <li><a ng-click="open_vlc()">Play in VLC</a></li>
+			  <li><a href="udp://" ng-click="open_clipboard()">Copy to clipboard</a>
 		  </ul>
 		</div>		
 	</p>

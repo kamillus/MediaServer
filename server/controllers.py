@@ -14,7 +14,7 @@ class Server(QThread):
     def run(self):
         while(1):
             cherrypy.quickstart(Root(), "/", {
-                "global": {"server.socket_port": 1345},
+                "global": {"server.socket_port": 1345, "server.socket_host": "0.0.0.0"},
                 "/static": {"tools.staticdir.dir": os.path.abspath(os.path.join(os.path.dirname( __file__ ), "..", "static")), "tools.staticdir.on": "True"},
                 "/static_media": {"tools.staticdir.dir": self.static_directory, "tools.staticdir.on": "True"},    
             })  
@@ -41,7 +41,6 @@ class VideoStream(QThread):
         
     def run(self):
         while(1):
-            print "hello"
             self.process_path()
             self.finish()
             time.sleep(200)
