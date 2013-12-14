@@ -17,39 +17,34 @@
 			</div>
 		</li>
 		<li>
-			<a>Browse by Date Added</a>
+			<a><span class="glyphicon glyphicon-calendar"></span></a>
 		</li>
 		<li>
-			<a>Browse by Letter</a>
+			<a><span class="glyphicon glyphicon-search"></span></a>
 		</li>
+		<li><a>{{total_count}}</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </div>
 
 <div class="library_details">
-	<h1>{{video.filename}}</h1>
-	<p>{{video.directory}}</p>
-	<p>{{video.path}}</p>
 
-	<p>
-		<div class="input-group">
-  			<input type="text" class="form-control" value="{{vlc_player_copy}}" select-on-click>
-		</div>
-	</p>
-
-	<p>
-		<div class="btn-group">
-		  <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
-		    Play<span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu">
-			  <li><a href="http://{{host}}/static_media{{video.static_path}}">Download</a></li>
-			  <li><a ng-click="open_vlc()">Play in VLC</a></li>
-		  </ul>
-		</div>		
-	</p>
-
+	<div class="jumbotron">
+	  <h1>{{video.filename}} Details</h1>
+	  <br/>
+	  <p>
+	  	<a class="btn btn-primary btn-lg" role="button">Play</a>
+	  	<a class="btn btn-primary btn-lg" href="http://{{host}}/static_media{{video.static_path}}">Download</a>
+	  	<a class="btn btn-primary btn-lg" ng-click="open_vlc()">Play in VLC</a>
+	  	<br/><br/>
+	  	Paste this url into VLC or another player:
+	  	<input type="text" class="form-control" value="{{vlc_player_copy}}" select-on-click style="width:100%">
+	  	<br/><br/>	  		
+	  </p>
+	  <span class="label label-info">Source: {{video.directory}}</span>
+	  <span class="label label-info">Path: {{video.path}}</span>
+	</div>
 
 </div>
 

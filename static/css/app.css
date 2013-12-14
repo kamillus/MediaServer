@@ -1,6 +1,11 @@
-.library_list, .library_details
+.library_list
 {
 	margin-top:80px;
+}
+
+.library_details
+{
+	margin-top:60px;
 }
 
 .container
