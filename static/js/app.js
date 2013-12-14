@@ -53,4 +53,18 @@ angular.module('encoding', []).
 		 return atob(string)
 	 }
 	});
+
+
+  app.directive('selectOnClick', function () {
+    // Linker function
+    return function (scope, element, attrs) {
+        element.bind('click', function () {
+            //this.select();
+            e = this
+            setTimeout(function() {
+              e.setSelectionRange(0, 9999);
+            }, 1);
+        });
+    };
+});
 	

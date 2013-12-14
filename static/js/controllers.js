@@ -40,11 +40,12 @@ controllers.controller('VideoDetailController', ['$scope', '$routeParams', 'medi
       result.static_path = result.path.replace(result.library, "")
 		  $scope.video = result
       $scope.host = location.host
-      result.vlc_udp_path = "udp://" + $scope.host + "/" + "static_media" + result.static_path
+      result.vlc_udp_path = "rtsp://" + $scope.host + "/" + "static_media" + result.static_path
 
 
       console.log(result)
 
+      $scope.vlc_player_copy = "http://" + $scope.host + "/static_media" + $scope.video.static_path
 
       $scope.open_clipboard = function()
       {

@@ -31,6 +31,13 @@
 	<h1>{{video.filename}}</h1>
 	<p>{{video.directory}}</p>
 	<p>{{video.path}}</p>
+
+	<p>
+		<div class="input-group">
+  			<input type="text" class="form-control" value="{{vlc_player_copy}}" select-on-click>
+		</div>
+	</p>
+
 	<p>
 		<div class="btn-group">
 		  <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
@@ -39,7 +46,6 @@
 		  <ul class="dropdown-menu">
 			  <li><a href="http://{{host}}/static_media{{video.static_path}}">Download</a></li>
 			  <li><a ng-click="open_vlc()">Play in VLC</a></li>
-			  <li><a href="udp://" ng-click="open_clipboard()">Copy to clipboard</a>
 		  </ul>
 		</div>		
 	</p>
