@@ -4,6 +4,7 @@ import os
 from client.settings import Settings
 from PyQt4.QtCore import *
 from jinja2 import Environment, FileSystemLoader
+import subprocess
 
 class Server(QThread):
     static_directory = ""
@@ -34,13 +35,37 @@ class Root(object):
         settings = Settings() 
         return json.dumps(settings.library)
 
+    @cherrypy.expose
+    def start_stream(self, path):
+        try:
+            self.stream.stop()
+        except:
+            print "Stream not running."
+
+        self.stream = VideoStream()
+        print "path"
+        print path
+        self.stream.set_stream_path(path)
+        self.stream.set_stream_to_ip(cherrypy.request.remote.ip)
+        self.stream.start()
+
 class VideoStream(QThread):
-    def __init__(self, path=None):
-        self.stream_path = "/Users/kawid/Graboid/Completed/6034630_-_Parks_and_Recreation_-_4x13/parks.and.recreation.413.hdtv-lol.avi"
+    vlc_path = "/Applications/VLC.app/Contents/MacOS/VLC"
+
+    def __init__(self):
         QThread.__init__(self)
-        
+    
+    def set_stream_to_ip(self, ip):
+        self.remote_ip = ip
+
+    def set_stream_path(self, path):
+        self.stream_path = path
+
+    def get_vlc_command(self):
+        return [self.vlc_path, self.stream_path, "-I", "dummy", "--vout=dummy", "#duplicate{dst=display,dst=\"transcode{vcodec=mp4v,acodec=mpga,vb=800,ab=128,deinterlace}:rtp{mux=ts,dst=" + self.remote_ip + ",sdp=sap,name=\"VideoStream\"}\"}"]
+
     def run(self):
-        while(1):
-            self.process_path()
-            self.finish()
-            time.sleep(200)
+        print self.get_vlc_command()
+        print " ".join(self.get_vlc_command())
+        process = subprocess.Popen(" ".join(self.get_vlc_command()), shell=True, stdout=subprocess.PIPE)
+        process.wait()

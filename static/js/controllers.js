@@ -15,8 +15,8 @@ controllers.controller('VideoListController', ['$scope', '$http', 'media_library
 	  })	  
   }]);
  
-controllers.controller('VideoDetailController', ['$scope', '$routeParams', 'media_library',
-  function($scope, $routeParams, media_library) {
+controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParams', 'media_library',
+  function($scope, $http, $routeParams, media_library) {
 	  video_id = atob($routeParams.videoId)
 	  console.log(video_id)
 	  library_data = ""
@@ -53,7 +53,21 @@ controllers.controller('VideoDetailController', ['$scope', '$routeParams', 'medi
       }
 
       $scope.open_vlc = function(){
-        window.location = result.vlc_udp_path
+        //window.location = result.vlc_udp_path
+        playback = "vlc://" + "http://" + $scope.host + "/static_media" + $scope.video.static_path;
+        console.log(playback)
+        window.location = playback
+      }
+
+      $scope.open_rtsp = function(){
+        /*$http.get('/start_stream?path=' + $scope.video.path).success(function(data)
+        {
+        });*/   
+
+        setTimeout(function() {
+              window.location = "vlc://" + "http://" + $scope.host + "/static_media" + $scope.video.static_path;
+        }, 2);
+        
       }
 		  		  
 	  }) 
