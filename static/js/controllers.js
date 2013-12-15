@@ -17,7 +17,7 @@ controllers.controller('VideoListController', ['$scope', '$http', 'media_library
  
 controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParams', 'media_library',
   function($scope, $http, $routeParams, media_library) {
-	  video_id = atob($routeParams.videoId)
+	  video_id = $routeParams.videoId
 	  console.log(video_id)
 	  library_data = ""
 	  
@@ -27,7 +27,7 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
 
 		  angular.forEach($scope.libraries, function(library, library_key){
 			  angular.forEach(library.library, function(item, item_key){
-				  if(item.path == video_id)
+				  if(item.hash == video_id)
 				  {
 					  console.log("found")
 					  result = item
