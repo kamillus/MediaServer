@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Media Server</a>
+      <a class="navbar-brand" href="#">AMS</a>
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
@@ -17,12 +17,13 @@
 			</div>
 		</li>
 		<li>
-			<a><span class="glyphicon glyphicon-calendar"></span></a>
+			<a ng-click="predicate = '-timestamp'; reverse=false; column = 'added'"><span class="glyphicon glyphicon-calendar"></span></a>
 		</li>
 		<li>
 			<a><span class="glyphicon glyphicon-search"></span></a>
 		</li>
 		<li><a>{{total_count}}</a></li>
+		<li><a>{{location.host}}</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
@@ -30,10 +31,10 @@
 
 <div class="library_list">
 	<div class="container">
-		<p>Sorted by Added</p>
+		<p>Sorted by {{column}}</p>
 		<div ng-if="loading">Loading..</div>
 		<ul class="list-group" ng-repeat="(library_key, library) in libraries">
-			<li class="list-group-item" ng-repeat="(item_key, item) in library.library | filter:searchText | limitTo:50">
+			<li class="list-group-item" ng-repeat="(item_key, item) in library.library | filter:searchText | limitTo:50 | orderBy:predicate">
 				<a href="#/videos/{{item.hash}}" >
 					<h4 class="list-group-item-heading">{{item.filename}}</h4>
 					<p class="list-group-item-text">{{item.path}}</p>

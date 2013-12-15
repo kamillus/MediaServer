@@ -4,8 +4,9 @@ controllers.controller('VideoListController', ['$scope', '$http', 'media_library
   function ($scope, $http, media_library) {  
     $scope.loading = true
 	  media_library.get_library_data(function(data){
-          $scope.libraries = data
-          $scope.loading = false
+      $scope.libraries = data
+      $scope.loading = false
+      $scope.column = "none"
 		  
 		  $scope.total_count = 0
 	  

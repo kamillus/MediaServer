@@ -26,6 +26,8 @@ class Application(object):
         
         self.server = Server()
         self.server.static_directory = self.settings.file_paths[0]
+        self.server.port = int(self.settings.port)
+        self.server.host = self.settings.host
         self.server.start()
         
         self.tray_widget.show()

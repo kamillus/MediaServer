@@ -1,10 +1,11 @@
 import os
 import json
+import socket
 
 class Settings(object):
     protocol = "http"
-    host = "localhost"
-    port = "8080"
+    host = socket.gethostbyname(socket.gethostname())
+    port = "1345"
     user_settings_directory = "~/.MediaServer"
     settings_file = "settings"
     library_file = "library"
@@ -18,7 +19,7 @@ class Settings(object):
         self.get_config_from_files()
     
     def get_server_address(self):
-        return self.protocol + "//" + self.host + ":" + self.port
+        return self.protocol + "://" + self.host + ":" + self.port
         
     def create_user_dirs(self):
         if not os.path.exists(self.get_settings_directory()):

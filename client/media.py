@@ -2,6 +2,7 @@ import time
 import os
 from PyQt4.QtCore import *
 import hashlib
+import time
 
 
 class MediaCollector(QThread):
@@ -34,7 +35,8 @@ class MediaCollector(QThread):
                                 "filename": filename,
                                 "directory": dirpath,
                                 "path": os.path.join(dirpath, filename),
-                                "hash": hashlib.md5(os.path.join(dirpath, filename).encode('utf8')).hexdigest()                      
+                                "hash": hashlib.md5(os.path.join(dirpath, filename).encode('utf8')).hexdigest(),
+                                "timestamp": os.path.getctime(os.path.join(dirpath, filename))                     
                             }
                         )
                         

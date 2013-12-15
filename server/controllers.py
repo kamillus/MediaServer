@@ -8,6 +8,8 @@ import subprocess
 
 class Server(QThread):
     static_directory = ""
+    port = ""
+    host = ""
     
     def __init__(self):
         QThread.__init__(self)
@@ -15,7 +17,7 @@ class Server(QThread):
     def run(self):
         while(1):
             cherrypy.quickstart(Root(), "/", {
-                "global": {"server.socket_port": 1345, "server.socket_host": "0.0.0.0"},
+                "global": {"server.socket_port": self.port, "server.socket_host": self.host},
                 "/static": {"tools.staticdir.dir": os.path.abspath(os.path.join(os.path.dirname( __file__ ), "..", "static")), "tools.staticdir.on": "True"},
                 #"/static_media": {"tools.staticdir.dir": self.static_directory, "tools.staticdir.on": "True"},    
             })  
@@ -53,7 +55,7 @@ class Root(object):
 
     def file_generator(self, f):
         while 1:
-            data = f.read(1024 * 8) # Read blocks of 8KB at a time
+            data = f.read(1024 * 8 * 4) # Read blocks of 8KB at a time
             if not data: break
             yield data
 
