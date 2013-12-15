@@ -45,16 +45,16 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
 
       console.log(result)
 
-      $scope.vlc_player_copy = "http://" + $scope.host + "/static_media" + $scope.video.static_path
+      $scope.vlc_player_copy = "http://" + $scope.host + "/get_file/" + $scope.video.hash
 
       $scope.open_clipboard = function()
       {
-          window.prompt ("Copy to clipboard:", "http://" + $scope.host + "/static_media" + $scope.video.static_path);
+          window.prompt ("Copy to clipboard:", "http://" + $scope.host + "/get_file/" + $scope.video.hash);
       }
 
       $scope.open_vlc = function(){
         //window.location = result.vlc_udp_path
-        playback = "vlc://" + "http://" + $scope.host + "/static_media" + $scope.video.static_path;
+        playback = "vlc://" + "http://" + $scope.host + "/get_file/" + $scope.video.hash;
         console.log(playback)
         window.location = playback
       }
