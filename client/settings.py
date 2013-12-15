@@ -4,7 +4,7 @@ import socket
 
 class Settings(object):
     protocol = "http"
-    host = socket.gethostbyname(socket.gethostname())
+    host = "0.0.0.0" #socket.gethostbyname(socket.gethostname())
     port = "1345"
     user_settings_directory = "~/.MediaServer"
     settings_file = "settings"
