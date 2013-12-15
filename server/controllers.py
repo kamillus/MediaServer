@@ -36,6 +36,28 @@ class Root(object):
         return json.dumps(settings.library)
 
     @cherrypy.expose  
+    def stream_file(self, file_hash):
+        settings = Settings() 
+        libraries = settings.library
+        result = {}
+
+        for library in libraries.iteritems():
+            for item in library[1]["library"]:
+                if item["hash"] == file_hash:
+                    result = item
+
+        cherrypy.response.headers['Content-Type'] = ContentTypeSelector().get_content_type(result["filename"])
+        media_file = open(result["path"], 'rb') 
+        return self.file_generator(media_file)
+        #return json.dumps(result)
+
+    def file_generator(self, f):
+        while 1:
+            data = f.read(1024 * 8) # Read blocks of 8KB at a time
+            if not data: break
+            yield data
+
+    @cherrypy.expose
     def get_file(self, file_hash):
         settings = Settings() 
         libraries = settings.library
@@ -47,14 +69,7 @@ class Root(object):
                 if item["hash"] == file_hash:
                     result = item
 
-        cherrypy.response.headers['Content-Type'] = ContentTypeSelector().get_content_type(result["filename"])
-        media_file = open(result["path"], 'rb') 
-        return self.file_generator(media_file)
-        #return json.dumps(result)
-
-    def file_generator(self, f):
-        for data in f:
-            yield data
+        return json.dumps(result)        
 
     @cherrypy.expose
     def start_stream(self, path):
@@ -65,7 +80,7 @@ class Root(object):
 
         self.stream = VideoStream()
         print "path"
-        print path
+        #print path
         self.stream.set_stream_path(path)
         self.stream.set_stream_to_ip(cherrypy.request.remote.ip)
         self.stream.start()

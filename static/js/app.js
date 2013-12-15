@@ -24,7 +24,7 @@ app.factory('media_library', function($http) {
 	library_data = ""
 	
 	return {
-        get_library_data: function(callback) {
+    get_library_data: function(callback) {
 			if(library_data == "")
 			{
 				$http.get('/get_library').success(function(data)
@@ -38,9 +38,16 @@ app.factory('media_library', function($http) {
 				callback(library_data)
 			}
 				
-		}		
+		},
+    get_library_item_data: function(hash, callback) {
+      $http.get('/get_file?file_hash=' + hash).success(function(data)
+      {
+        callback(data)
+        library_item_data = data
+      });     
     }
-  });
+  }
+});
   
 angular.module('encoding', []).
 	filter('encode_url', function() {               // filter is a factory function

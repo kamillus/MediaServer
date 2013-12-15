@@ -21,22 +21,9 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
 	  console.log(video_id)
 	  library_data = ""
 	  
-	  media_library.get_library_data(function(data){
+	  media_library.get_library_item_data(video_id, function(data){
       $scope.libraries = data
-		  result = null
-
-		  angular.forEach($scope.libraries, function(library, library_key){
-			  angular.forEach(library.library, function(item, item_key){
-				  if(item.hash == video_id)
-				  {
-					  console.log("found")
-					  result = item
-            result.library = library_key
-				  }
-				  	
-			  });		 
-		  });
-
+		  result = data
       result.static_path = result.path.replace(result.library, "")
 		  $scope.video = result
       $scope.host = location.host
@@ -45,16 +32,16 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
 
       console.log(result)
 
-      $scope.vlc_player_copy = "http://" + $scope.host + "/get_file/" + $scope.video.hash
+      $scope.vlc_player_copy = "http://" + $scope.host + "/stream_file/" + $scope.video.hash
 
       $scope.open_clipboard = function()
       {
-          window.prompt ("Copy to clipboard:", "http://" + $scope.host + "/get_file/" + $scope.video.hash);
+          window.prompt ("Copy to clipboard:", "http://" + $scope.host + "/stream_file/" + $scope.video.hash);
       }
 
       $scope.open_vlc = function(){
         //window.location = result.vlc_udp_path
-        playback = "vlc://" + "http://" + $scope.host + "/get_file/" + $scope.video.hash;
+        playback = "vlc://" + "http://" + $scope.host + "/stream_file/" + $scope.video.hash;
         console.log(playback)
         window.location = playback
       }
