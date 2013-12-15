@@ -12,8 +12,12 @@ class Settings(object):
     file_paths = []
     library = {}
     settings = {}
+    icon_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "..", "icon.png"))
     
-    def __init__(self):
+    def __init__(self):  
+        if not os.path.exists(self.icon_path):
+            self.icon_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "../..", "icon.png"))    
+
         self.create_user_dirs()
         self.get_media_library()
         self.get_config_from_files()

@@ -21,7 +21,9 @@ class Application(object):
         self.main_widget.set_application_exit(self.app.exit)
         self.main_widget.set_app_url_settings(self.settings.get_server_address())
         
-        icon = QApplication.style().standardIcon(QStyle.SP_DriveNetIcon)     
+        icon = QApplication.style().standardIcon(QStyle.SP_DriveNetIcon)
+        print self.settings.icon_path
+        icon = QIcon(self.settings.icon_path);     
         self.tray_widget = MediaTray(parent=self.main_widget, icon=icon)
         
         self.server = Server()

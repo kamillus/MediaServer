@@ -15,10 +15,14 @@ class Server(QThread):
         QThread.__init__(self)
 
     def run(self):
+        static_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "..", "static"))
+        if not os.path.exists(static_path):
+            static_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "../../../../", "static"))
+
         while(1):
             cherrypy.quickstart(Root(), "/", {
                 "global": {"server.socket_port": self.port, "server.socket_host": self.host},
-                "/static": {"tools.staticdir.dir": os.path.abspath(os.path.join(os.path.dirname( __file__ ), "..", "static")), "tools.staticdir.on": "True"},
+                "/static": {"tools.staticdir.dir": static_path, "tools.staticdir.on": "True"},
                 #"/static_media": {"tools.staticdir.dir": self.static_directory, "tools.staticdir.on": "True"},    
             })  
         
