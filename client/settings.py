@@ -54,6 +54,7 @@ class Settings(object):
 
     def write_config_settings(self):
         try:
+            print self.settings["file_paths"]
             self.settings = {"file_paths": self.settings["file_paths"]}
             f = open(self.get_settings_file_path(), 'w')
             f.write(json.dumps(self.settings))

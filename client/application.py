@@ -49,7 +49,8 @@ class ApplicationWidget(QtGui.QWidget):
             dirs = QFileDialog.getExistingDirectory(self, "Select your media directory")
             print dirs
             if dirs:    
-                self.settings.settings["file_paths"][0] = dir
+                self.settings.settings["file_paths"][0] = str(dirs)
+                self.settings.write_config_settings()
         except Exception as e:
             print e        
 
