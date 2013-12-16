@@ -3,6 +3,8 @@ var controllers = angular.module('controllers', []);
 controllers.controller('VideoListController', ['$scope', '$http', 'media_library',
   function ($scope, $http, media_library) {  
     $scope.loading = true
+    $scope.header = "/static/partials/header.html"
+    
 	  media_library.get_library_data(function(data){
       $scope.libraries = data
       $scope.loading = false
@@ -26,6 +28,11 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
       $scope.libraries = data
 		  result = data
       result.static_path = result.path.replace(result.library, "")
+      
+      result.music = result.filename.indexOf(".mp3")>0? true: false;
+      result.video = result.filename.indexOf(".mp4")>0? true: false;
+
+      result.media_url = "http://" + location.host + "/stream_file/" + result.hash
 		  $scope.video = result
       $scope.host = location.host
       result.vlc_udp_path = "rtsp://" + $scope.host + "/" + "static_media" + result.static_path

@@ -29,20 +29,23 @@
   </div>
 </div>
 
+<ng-include src="templatePath"></ng-include>
+
 <div class="library_list">
 	<div class="container">
 		<p>Sorted by {{column}}</p>
 		<div ng-if="loading">Loading..</div>
 		<ul class="list-group" ng-repeat="(library_key, library) in libraries">
 			<li class="list-group-item" ng-repeat="(item_key, item) in library.library | filter:searchText | limitTo:50 | orderBy:predicate">
-				<a href="#/videos/{{item.hash}}" >
+				<a href="#/videos/{{item.hash}}" ng-click="loading=true">
+					<div ng-show="loading">Loading..</div>
 					<h4 class="list-group-item-heading">{{item.filename}}</h4>
 					<p class="list-group-item-text">{{item.path}}</p>
 					<br/>
 					<a type="button" class="btn btn-primary btn-sm">
   						<span class="glyphicon glyphicon-download-alt"></span> Download
 					</a>
-					<a  href="#/videos/{{item.hash}}" type="button" class="btn btn-primary btn-sm">
+					<a href="#/videos/{{item.hash}}" type="button" class="btn btn-primary btn-sm">
   						<span class="glyphicon glyphicon-eye-open"></span> View
 					</a>
 				</a>

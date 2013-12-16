@@ -34,14 +34,16 @@
 	  <h1>{{video.filename}} Details</h1>
 	  <br/>
 	  <p>
-	  	<a class="btn btn-primary btn-lg" role="button">Play</a>
 	  	<a class="btn btn-primary btn-lg" href="http://{{host}}/stream_file/{{video.hash}}">Download</a>
-	  	<a class="btn btn-primary btn-lg" ng-click="open_vlc()">Play in VLC</a>
+	  	<a class="btn btn-primary btn-lg" ng-click="open_vlc()">Play</a>
 	  	<!--a class="btn btn-primary btn-lg" ng-click="open_rtsp()">Play RTSP in VLC</a-->
 	  	<br/><br/>
 	  	Paste this url into VLC or another player:
 	  	<input type="text" class="form-control" value="{{vlc_player_copy}}" select-on-click style="width:100%">
-	  	<br/><br/>	  		
+	  	<br/><br/>
+	   <audio controls type="audio/mp3" ng-src="{{video.media_url}}" ng-show="video.music"></audio>
+	   <video controls type="video/mp4" ng-src="{{video.media_url}}" ng-show="video.video"></video>	
+
 	  </p>
 	  <span class="label label-info">Source: {{video.directory}}</span>
 	  <span class="label label-info">Path: {{video.path}}</span>

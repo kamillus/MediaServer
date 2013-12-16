@@ -19,7 +19,7 @@ class MediaCollector(QThread):
             print "hello"
             self.process_path()
             self.finish()
-            time.sleep(200)
+            time.sleep(36000)
             
     def process_path(self):
         extension_processor = FileExtensionProcessor()

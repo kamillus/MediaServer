@@ -58,10 +58,12 @@ class Root(object):
         #return json.dumps(result)
 
     def file_generator(self, f):
-        while 1:
-            data = f.read(1024 * 8 * 4) # Read blocks of 8KB at a time
-            if not data: break
-            yield data
+        while True:
+            data = f.read(1500000)
+            if data:
+                yield data
+            else:
+                return
 
     @cherrypy.expose
     def get_file(self, file_hash):
