@@ -50,7 +50,7 @@ if sys.platform == "win32":
             ('static\\partials\\', ['static\\partials\\music_player.html']),
             ('templates\\', ['templates\\index.html']),
             ('templates\\', ['templates\\base.html']),
-            ('lib\\python2.7\\', ['icon.png']),
+            ('', ['icon.png']),
             ]
 
 
@@ -58,7 +58,8 @@ if sys.platform == "win32":
     options = {
         'excludes':['PyQt4.QtDesigner','PyQt4.QtOpenGl','PyQt4.QtScript','PyQt4.QtSql','PyQt4.QtTest','PyQt4.QtXml','PyQt4.phonon', 'PyQt4.QtHelp', 'PyQt4.QtDeclarative', 'PyQt4.QtDeclarative'],
         "bundle_files": 3,
-        'includes': ["sip", "client", "server"]
+        'includes': ["sip", "email", "client", "server"],
+        "packages": ["encodings", "email"],
     }
 
     program = [

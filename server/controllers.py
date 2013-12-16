@@ -18,6 +18,8 @@ class Server(QThread):
         static_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "..", "static"))
         if not os.path.exists(static_path):
             static_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "../../../../", "static"))
+        if not os.path.exists(static_path):
+            static_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "../../", "static"))
 
         while(1):
             cherrypy.quickstart(Root(), "/", {

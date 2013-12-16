@@ -17,6 +17,8 @@ class Settings(object):
     def __init__(self):  
         if not os.path.exists(self.icon_path):
             self.icon_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "../..", "icon.png"))    
+        if not os.path.exists(self.icon_path):
+            self.icon_path = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "icon.png"))  
 
         self.create_user_dirs()
         self.get_media_library()
