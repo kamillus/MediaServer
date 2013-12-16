@@ -59,7 +59,7 @@ class Root(object):
 
     def file_generator(self, f):
         while True:
-            data = f.read(1500000)
+            data = f.read(1024*8)
             if data:
                 yield data
             else:
