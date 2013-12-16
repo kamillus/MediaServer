@@ -31,9 +31,10 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
       
       result.music = result.filename.indexOf(".mp3")>0? true: false;
       result.video = result.filename.indexOf(".mp4")>0? true: false;
-
-      result.media_url = "http://" + location.host + "/stream_file/" + result.hash
-		  $scope.video = result
+	  
+	  if(result.music || result.video)
+      	result.media_url = "http://" + location.host + "/stream_file/" + result.hash
+		$scope.video = result
       $scope.host = location.host
       result.vlc_udp_path = "rtsp://" + $scope.host + "/" + "static_media" + result.static_path
 
@@ -69,3 +70,11 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
 
 	  
   }]);
+  
+controllers.controller('MusicPlayerController', ['$scope', '$http', 'media_library',
+    function ($scope, $http, media_library) {  
+		console.log("hello from player")
+		
+    	$scope.player = "/static/partials/music_player.html"
+  	  }	  
+]);

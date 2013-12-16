@@ -1,4 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 	<div ng-view></div>
+	<div ng-controller="MusicPlayerController">
+		<ng-include src="player">
+	</div>
 {% endblock %}
