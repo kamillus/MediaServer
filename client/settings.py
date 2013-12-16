@@ -52,6 +52,15 @@ class Settings(object):
             
         self.file_paths = self.settings["file_paths"]
 
+    def write_config_settings(self):
+        try:
+            self.settings = {"file_paths": self.settings["file_paths"]}
+            f = open(self.get_settings_file_path(), 'w')
+            f.write(json.dumps(self.settings))
+            f.close()
+        except Exception as e:
+            print e      
+
     def get_media_library(self):
         try:
             f = open(self.get_library_file_path(), 'r')

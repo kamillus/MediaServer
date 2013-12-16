@@ -18,6 +18,7 @@ class Application(object):
         
         self.main_widget = ApplicationWidget()
         self.main_widget.hide()
+        self.main_widget.settings = self.settings
         self.main_widget.set_application_exit(self.app.exit)
         self.main_widget.set_app_url_settings(self.settings.get_server_address())
         
@@ -36,10 +37,22 @@ class Application(object):
         sys.exit(self.app.exec_())
         
 class ApplicationWidget(QtGui.QWidget):
+    settings = None
+
     def open(self):
         print self.app_url
         QDesktopServices.openUrl(QUrl(self.app_url))
-        
+
+    def change_path(self):
+        print "path"
+        try:
+            dirs = QFileDialog.getExistingDirectory(self, "Select your media directory")
+            print dirs
+            if dirs:    
+                self.settings.settings["file_paths"][0] = dir
+        except Exception as e:
+            print e        
+
     def exit(self):
         print "exit"
         try:
@@ -62,12 +75,17 @@ class MediaTray(QtGui.QSystemTrayIcon):
         
         self.setActions()
         openAction = menu.addAction(self.openAction)
+        pathAction = menu.addAction(self.pathAction)
         exitAction = menu.addAction(self.exitAction)
+
         self.setContextMenu(menu)
         
     def setActions(self):
         self.openAction = QtGui.QAction(self.tr("Open"), self)
         QObject.connect(self.openAction, SIGNAL("triggered()"), self.parent.open)
+
+        self.pathAction = QtGui.QAction(self.tr("Change Path"), self)
+        QObject.connect(self.pathAction, SIGNAL("triggered()"), self.parent.change_path)
         
         self.exitAction = QtGui.QAction(self.tr("Exit"), self)
         QObject.connect(self.exitAction, SIGNAL("triggered()"), self.parent.exit)
