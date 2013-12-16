@@ -21,33 +21,39 @@ app.config(['$routeProvider',
   }]);
   
 app.factory('media_library', function($http) {
-	library_data = ""
+	lib_data = null
+	service = {}
 	
-	return {
-    get_library_data: function(callback) {
-			if(library_data == "")
+	service.get_library_data = function(callback)
+	{
+		
+		if(lib_data== null)
+		{
+			console.log("getting library")
+			$http.get('/get_library').success(function(data)
 			{
-				$http.get('/get_library').success(function(data)
-				{
-					callback(data)
-					library_data = data
-				});			
-			}
-			else
-			{
-				callback(library_data)
-			}
-				
-		},
-    get_library_item_data: function(hash, callback) {
+				callback(data)
+				lib_data = data
+			});			
+		}
+		else
+		{
+			callback(lib_data)
+		}		
+	}
+	
+	
+	service.get_library_item_data = function(hash, callback) 
+	{
       $http.get('/get_file?file_hash=' + hash).success(function(data)
       {
         callback(data)
-        library_item_data = data
       });     
     }
+	
+	return service
   }
-});
+);
   
 angular.module('encoding', []).
 	filter('encode_url', function() {               // filter is a factory function
