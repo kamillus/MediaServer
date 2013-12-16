@@ -54,18 +54,21 @@ class Root(object):
 
         cherrypy.response.headers['Content-Type'] = ContentTypeSelector().get_content_type(result["filename"])
         cherrypy.response.headers["Content-Length"] = os.path.getsize(result["path"])
-        cherrypy.response.headers["Content-Disposition"] = 'attachment; filename="%s"' % os.path.basename(result["filename"])
+        #cherrypy.response.headers["Content-Disposition"] = 'attachment; filename="%s"' % os.path.basename(result["filename"])
         media_file = open(result["path"], 'rb') 
         return self.file_generator(media_file)
         #return json.dumps(result)
 
     def file_generator(self, f):
+        data = f.read(1024*8)
         try:
             while len(data) > 0:
-                data = f.read(1024*8)
                 yield data
+                data = f.read(1024*8)
+                
         except:
             f.close()
+        f.close()
     stream_file._cp_config = {'response.stream': True}
 
     @cherrypy.expose
