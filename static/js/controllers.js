@@ -1,7 +1,7 @@
 var controllers = angular.module('controllers', []);
  
-controllers.controller('VideoListController', ['$scope', '$http', 'media_library', 'search',
-  function ($scope, $http, media_library, search) {  
+controllers.controller('VideoListController', ['$scope', '$http', 'media_library', 'search', 'media_player',
+  function ($scope, $http, media_library, search, media_player) {  
     $scope.loading = true
     $scope.header = "/static/partials/header.html"
 
@@ -18,11 +18,16 @@ controllers.controller('VideoListController', ['$scope', '$http', 'media_library
 		  angular.forEach($scope.libraries, function(library, library_key){
 			  $scope.total_count += library.library.length
 		  });
-	  })	  
+	  })	 
+
+    $scope.add_to_playlist = function(item) {
+      media_player.playlist.push(item)
+    }
+
   }]);
  
-controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParams', 'media_library',
-  function($scope, $http, $routeParams, media_library) {
+controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParams', 'media_library', 'media_player',
+  function($scope, $http, $routeParams, media_library, media_player) {
 	  video_id = $routeParams.videoId
 	  console.log(video_id)
 	  library_data = ""
@@ -45,9 +50,6 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
       $scope.host = location.host
       result.vlc_udp_path = "rtsp://" + $scope.host + "/" + "static_media" + result.static_path
 
-
-      console.log(result)
-
       $scope.vlc_player_copy = "http://" + $scope.host + "/stream_file/" + $scope.video.hash
 
       $scope.open_clipboard = function()
@@ -68,9 +70,14 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
         });*/   
 
         setTimeout(function() {
-              window.location = "vlc://" + "http://" + $scope.host + "/static_media" + $scope.video.static_path;
+          window.location = "vlc://" + "http://" + $scope.host + "/static_media" + $scope.video.static_path;
         }, 2);
         
+      }
+
+      $scope.add_to_playlist = function() {
+        console.log(media_library)
+        media_player.playlist.push($scope.video)
       }
 		  		  
 	  }) 
@@ -79,8 +86,12 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
   }]);
   
 controllers.controller('MusicPlayerController', ['$scope', '$http', 'media_player',
-    function ($scope, $http, media_library) {  
+    function ($scope, $http, media_player) {  
 		
+      $scope.playlist = media_player.playlist
     	$scope.player = "/static/partials/music_player.html"
-  	  }	  
+      $scope.show_playlist = 1
+
+  	  }
+
 ]);

@@ -82,7 +82,7 @@ angular.module('encoding', []).
 });
 
 app.factory('media_player', function($http) {
-  playlist = null
+  playlist = []
   service = {}
   
   service.playlist = playlist
