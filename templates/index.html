@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-	<div ng-view></div>
-	<div ng-controller="MusicPlayerController">
-		<ng-include src="player">
+
+	<div class="row">
+  		<div class="col-xs-12 col-sm-10 col-md-10" ng-view></div>
+  		<div class="col-xs-6 col-sm-2 col-md-2" ng-controller="MusicPlayerController">
+			<ng-include src="player">
+  		</div>
 	</div>
+
 {% endblock %}

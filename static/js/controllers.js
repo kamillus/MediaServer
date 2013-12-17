@@ -78,9 +78,8 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
 	  
   }]);
   
-controllers.controller('MusicPlayerController', ['$scope', '$http', 'media_library',
+controllers.controller('MusicPlayerController', ['$scope', '$http', 'media_player',
     function ($scope, $http, media_library) {  
-		console.log("hello from player")
 		
     	$scope.player = "/static/partials/music_player.html"
   	  }	  
