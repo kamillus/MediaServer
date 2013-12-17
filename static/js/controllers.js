@@ -1,7 +1,7 @@
 var controllers = angular.module('controllers', []);
  
-controllers.controller('VideoListController', ['$scope', '$http', 'media_library',
-  function ($scope, $http, media_library) {  
+controllers.controller('VideoListController', ['$scope', '$http', 'media_library', 'search',
+  function ($scope, $http, media_library, search) {  
     $scope.loading = true
     $scope.header = "/static/partials/header.html"
 
@@ -10,6 +10,7 @@ controllers.controller('VideoListController', ['$scope', '$http', 'media_library
       $scope.libraries = data
       $scope.loading = false
       $scope.column = "none"
+      $scope.search = search
 
 		  
 		  $scope.total_count = 0

@@ -13,7 +13,7 @@
       <ul class="nav navbar-nav">
       	<li>
 			<div class="input-group">
-			  <input type="text" class="form-control" ng-model="searchText">
+			  <input type="text" class="form-control" ng-model="search.query">
 			</div>
 		</li>
 		<li>
@@ -21,6 +21,9 @@
 		</li>
 		<li>
 			<a><span class="glyphicon glyphicon-search"></span></a>
+		</li>
+		<li>
+			<a><span class="glyphicon glyphicon-font" href="#/videos/alphabetical"></span></a>
 		</li>
 		<li><a>{{total_count}}</a></li>
 		<li><a>{{location.host}}</a></li>
@@ -36,7 +39,7 @@
 		<p>Sorted by {{column}}</p>
 		<div ng-if="loading">Loading..</div>
 		<ul class="list-group" ng-repeat="(library_key, library) in libraries">
-			<li class="list-group-item" ng-repeat="(item_key, item) in library.library | filter:searchText | limitTo:50 | orderBy:predicate">
+			<li class="list-group-item" ng-repeat="(item_key, item) in library.library | filter:search.query | limitTo:50 | orderBy:predicate">
 				<a href="#/videos/{{item.hash}}" ng-click="loading=true">
 					<div ng-show="loading">Loading..</div>
 					<h4 class="list-group-item-heading">{{item.filename}}</h4>

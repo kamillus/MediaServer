@@ -80,4 +80,22 @@ angular.module('encoding', []).
         });
     };
 });
+
+app.factory('media_player', function($http) {
+  playlist = null
+  service = {}
+  
+  service.playlist = playlist
+  
+  return service
+})
+
+app.factory('search', function() {
+  query = ""
+  service = {}
+
+  service.query = query
+  
+  return service
+})
 	
