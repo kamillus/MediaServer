@@ -1,7 +1,11 @@
-<audio controls type="audio/mp3" ng-src="{{video.music_url}}" ng-show="video.music"></audio>
-<a><span class="glyphicon glyphicon-th-list" href="#/videos/alphabetical" ng-click="show_playlist=show_playlist+1"></span></a>
+<a><span class="glyphicon glyphicon-th-list" href="#/videos/alphabetical" ng-click="show_playlist=show_playlist+1"> Playlist</span></a>
 <div ng-show="show_playlist % 2 == 0">
-	<div class="list-group">
-	  	<a href="#" class="list-group-item" ng-repeat="item in playlist track by $index"><span class="glyphicon glyphicon-play"></span> {{item.filename}}</a>
+	<audio controls type="audio/mp3" style="width:100%" ng-src="{{music_url}}" music-player></audio>
+	<div ng-show="playlist_empty">Nothing in playlist</div>
+	<ul class="list-group">
+		<li  class="list-group-item" ng-repeat="item in playlist track by $index">
+	  		<a href="#"><span class="glyphicon glyphicon-play"></span> {{item.filename}}</a> <a href ng-click="play(item.hash)">Play</a> <a ng-click="remove(item.hash)" href>Remove</a> 
+	  	</li>
+	</ul>
 	</div>
 </div>

@@ -98,4 +98,18 @@ app.factory('search', function() {
   
   return service
 })
+
+app.directive('musicPlayer', function() {
+	return {
+		link: function(scope, elem, attr, ctrl) {
+			elem.bind('timeupdate', function(e) {
+				scope.time_update(e, elem, attr)
+			});
+
+			elem.bind('ended', function(e) {
+				scope.ended(e, elem, attr)
+			});
+		  }
+     };
+  });
 	

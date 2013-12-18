@@ -92,6 +92,73 @@ controllers.controller('MusicPlayerController', ['$scope', '$http', 'media_playe
     	$scope.player = "/static/partials/music_player.html"
       $scope.show_playlist = 1
 
-  	  }
+      $scope.playlist_empty = $scope.playlist.count > 0? false: true;
+      $scope.currently_playing = ""
+
+
+      $scope.time_update = function(e, elem, attr)
+      {
+
+        $scope.$apply() 
+      }
+
+      $scope.ended = function(e, elem, attr)
+      {
+        angular.forEach($scope.playlist, function(library, library_key){
+          console.log(library)
+
+          if($scope.currently_playing == library.hash)
+          {
+            $scope.play_next(e, elem, attr)
+          }
+        });
+      }
+
+      $scope.play = function(hash)
+      {
+        angular.forEach($scope.playlist, function(library, library_key){
+          console.log(library)
+
+          if(hash == library.hash)
+          {
+            $scope.music_url = "http://" + location.host + "/stream_file/" + library.hash
+            $scope.currently_playing = library.hash
+          }
+        });
+      } 
+
+      $scope.play_next = function(e, elem, attr)
+      {
+        index = 0
+
+        angular.forEach($scope.playlist, function(library, library_key){
+          console.log(library)
+
+          if($scope.currently_playing == library.hash)
+          {
+            index = library_key
+          }
+        });   
+
+        $scope.currently_playing = $scope.playlist[index+1].hash
+        $scope.music_url = "http://" + location.host + "/stream_file/" + $scope.playlist[index+1].hash
+        $scope.$apply() 
+        elem.context.play()
+
+      }
+
+      $scope.remove = function(hash)
+      {
+        angular.forEach(media_player.playlist, function(library, library_key){
+          console.log(library)
+
+          if(hash == library.hash)
+          {
+            console.log(library_key)
+            delete media_player.playlist.splice(library_key,1)
+          }
+        });        
+      }
+  	}
 
 ]);
