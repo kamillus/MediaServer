@@ -29,7 +29,10 @@
 <div class="library_details">
 
 	<div class="jumbotron">
-	  <h1>{{video.filename}} Details</h1>
+		<div class="row">
+		  <div class="col-md-3"><img ng-src="{{video.cover}}" style="width: 200px; height:200px"/></div>
+		  <div class="col-md-9"><h1>{{video.filename}} Details</h1></div>
+		</div>
 	  <br/>
 	  <p>
 	  	<a class="btn btn-primary btn-lg" href="http://{{host}}/stream_file/{{video.hash}}">Download</a>

@@ -46,6 +46,8 @@ controllers.controller('VideoDetailController', ['$scope', '$http', '$routeParam
       if(result.video)
         result.video_url = "http://" + location.host + "/stream_file/" + result.hash
 
+      result.cover = "/get_cover_art?file_hash=" + result.hash
+
 		  $scope.video = result
       $scope.host = location.host
       result.vlc_udp_path = "rtsp://" + $scope.host + "/" + "static_media" + result.static_path

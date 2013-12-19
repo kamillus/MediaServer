@@ -5,6 +5,8 @@ from client.settings import Settings
 from PyQt4.QtCore import *
 from jinja2 import Environment, FileSystemLoader
 import subprocess
+from mutagen.mp3 import MP3
+from mutagen import File
 
 class Server(QThread):
     static_directory = ""
@@ -42,6 +44,41 @@ class Root(object):
     def get_library(self):
         settings = Settings() 
         return json.dumps(settings.library)
+
+    def find_item(self, file_hash):
+        settings = Settings() 
+        libraries = settings.library
+        result = {}
+
+        for library in libraries.iteritems():
+            for item in library[1]["library"]:
+                if item["hash"] == file_hash:
+                    result = item
+
+        return result
+
+
+    @cherrypy.expose
+    def get_file_tags(self, file_hash):
+        item = self.find_item(file_hash)
+        info = MP3(item["path"])
+
+        return json.dumps(info.pprint())
+
+
+
+    @cherrypy.expose
+    def get_cover_art(self, file_hash):
+        item = self.find_item(file_hash)
+        info = MP3(item["path"])
+        try:
+            file = File(item["path"])
+            artwork = file.tags['APIC:'].data
+            cherrypy.response.headers['Content-Type'] = "image/jpeg"
+        except:
+            artwork = None
+            
+        return artwork
 
     @cherrypy.expose  
     def stream_file(self, file_hash):
