@@ -103,15 +103,8 @@ controllers.controller('MusicPlayerController', ['$scope', '$http', 'media_playe
       }
 
       $scope.ended = function(e, elem, attr)
-      {
-         angular.forEach($scope.playlist, function(library, library_key){
-          console.log(library)
-
-          if($scope.currently_playing == library.hash)
-          {
+      { 
             $scope.play_next(e, elem, attr)
-          }
-        });  
       }
 
       $scope.play = function(hash)
@@ -130,16 +123,16 @@ controllers.controller('MusicPlayerController', ['$scope', '$http', 'media_playe
       $scope.play_next = function(e, elem, attr)
       {
         index = 0
-        found = false
+        found_item = false
 
-        angular.forEach($scope.playlist, function(library, library_key, found){
+        angular.forEach($scope.playlist, function(library, library_key){
           console.log(library)
 
-          if($scope.currently_playing == library.hash && !found)
+          if($scope.currently_playing == library.hash && !found_item)
           {
             index = library_key
             console.log(index)
-            found = true
+            found_item = true
           }
         });   
 
