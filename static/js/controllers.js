@@ -172,7 +172,8 @@ controllers.controller('DirectoryListController', ['$scope', '$http', 'media_lib
       $scope.loading = false
       $scope.search = search
       $scope.listing = []
-
+      $scope.last_directory = ""
+      $scope.browse_history = [""]
       
       $scope.total_count = 0
     
@@ -185,15 +186,19 @@ controllers.controller('DirectoryListController', ['$scope', '$http', 'media_lib
 
     })   
 
-    $scope.find_files = function(path){
-       $scope.listing = []
-       $scope.found_dirs = []
-       console.log(path)
+    $scope.find_files = function(path, skip_history){
+        $scope.listing = []
+        $scope.found_dirs = []
+        console.log(path)
+
+        if(!skip_history) $scope.browse_history.push(path)
+
        angular.forEach($scope.libraries, function(library, library_key){
         angular.forEach(library.library, function(item, item_key){
           if(item.directory[item.directory.length - 1] != "/")
+          {
             item.directory = item.directory + "/"
-
+          }  
 
           if(path + "/" == item.directory)
           {
@@ -212,7 +217,20 @@ controllers.controller('DirectoryListController', ['$scope', '$http', 'media_lib
             $scope.listing.push({directory:directory, type:"directory"})
           }
         })
-      }); 
+      });
+            console.log($scope.browse_history)
+ 
+    }
+
+    $scope.go_back = function()
+    {
+      $scope.browse_history.pop()
+      $scope.find_files($scope.browse_history[$scope.browse_history.length-1], true)
+    }
+
+    $scope.set_current_item = function(item)
+    {
+      $scope.current_item = item
     }
 
     $scope.add_to_playlist = function(item) {

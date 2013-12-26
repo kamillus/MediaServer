@@ -40,15 +40,16 @@
     <div class="col-md-4">
       <h3>Files</h3>
       <ul class="list-group">
-        <li class="list-group-item" ><a href>Back</a></li>
+        <li class="list-group-item"><a href ng-click="go_back()">Back</a></li>
         <li class="list-group-item" ng-repeat="(item_key, item) in listing">
           <a ng-show="item.type=='directory'" href ng-click="find_files(item.directory)">{{item.directory}}</a>
-          <a ng-show="item.type=='file'" href ng-click="find_files(item.directory)">{{item.filename}}</a>
+          <a ng-show="item.type=='file'" href ng-click="set_current_item(item)">{{item.filename}}</a>
         </li>
       </ul>
     </div>
     <div class="col-md-4">
       <h3>Item</h3>
+      <a href="#/videos/{{current_item.hash}}">View Details</a>
     </div>
   </div>
 </div>
