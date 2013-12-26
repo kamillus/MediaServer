@@ -15,6 +15,10 @@ app.config(['$routeProvider',
         templateUrl: '/static/partials/video-detail.html',
         controller: 'VideoDetailController'
       }).
+      when('/directories', {
+        templateUrl: '/static/partials/directory-list.html',
+        controller: 'DirectoryListController'
+      }).
       otherwise({
         redirectTo: '/'
       });

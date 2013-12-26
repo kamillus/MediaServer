@@ -160,3 +160,62 @@ controllers.controller('MusicPlayerController', ['$scope', '$http', 'media_playe
   	}
 
 ]);
+
+controllers.controller('DirectoryListController', ['$scope', '$http', 'media_library', 'search', 'media_player',
+  function ($scope, $http, media_library, search, media_player) {  
+    $scope.loading = true
+    $scope.header = "/static/partials/header.html"
+
+    
+    media_library.get_library_data(function(data){
+      $scope.libraries = data
+      $scope.loading = false
+      $scope.search = search
+      $scope.listing = []
+
+      
+      $scope.total_count = 0
+    
+      angular.forEach($scope.libraries, function(library, library_key){
+        $scope.total_count += library.library.length
+      });
+
+
+
+
+    })   
+
+    $scope.find_files = function(path){
+       $scope.listing = []
+       $scope.found_dirs = []
+       console.log(path)
+       angular.forEach($scope.libraries, function(library, library_key){
+        angular.forEach(library.library, function(item, item_key){
+          if(item.directory[item.directory.length - 1] != "/")
+            item.directory = item.directory + "/"
+
+
+          if(path + "/" == item.directory)
+          {
+            item_with_type = item
+            item_with_type["type"] = "file"
+            $scope.listing.push(item) 
+          }
+          //console.log(new RegExp(path + "\/" + ".+?\/",'g') + " " + item.directory)
+          matches = item.directory.match(new RegExp(path + "\/" + ".+?\/",'g'))
+          if(matches && matches[0] && !$scope.found_dirs[matches[0]])
+          {
+            directory = matches[0].substring(0, matches[0].length - 1);
+
+            $scope.back = ""
+            $scope.found_dirs[matches[0]] = true
+            $scope.listing.push({directory:directory, type:"directory"})
+          }
+        })
+      }); 
+    }
+
+    $scope.add_to_playlist = function(item) {
+      media_player.playlist.push(item)
+    }
+}]);

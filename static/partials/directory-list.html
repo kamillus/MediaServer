@@ -1,0 +1,54 @@
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">AMS</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+		<li>
+			<a href="javascript:history.back()"><span class="glyphicon glyphicon-chevron-left"></span> Back</a>
+		</li>
+		<li>
+			<a><span class="glyphicon glyphicon-calendar"></span></a>
+		</li>
+		<li>
+			<a><span class="glyphicon glyphicon-search"></span></a>
+		</li>
+    <li>
+      <a href="#/directories"><span class="glyphicon glyphicon-folder-open"></span></a>
+    </li>
+		<li><a>{{total_count}}</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="directory_list">
+  <div class="row">
+    <div class="col-md-4">
+      <h3>Library</h3>
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="(library_key, library) in libraries"><a href ng-click="find_files(library_key)">{{library_key}}</a></li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h3>Files</h3>
+      <ul class="list-group">
+        <li class="list-group-item" ><a href>Back</a></li>
+        <li class="list-group-item" ng-repeat="(item_key, item) in listing">
+          <a ng-show="item.type=='directory'" href ng-click="find_files(item.directory)">{{item.directory}}</a>
+          <a ng-show="item.type=='file'" href ng-click="find_files(item.directory)">{{item.filename}}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h3>Item</h3>
+    </div>
+  </div>
+</div>
