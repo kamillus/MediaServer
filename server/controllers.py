@@ -70,11 +70,17 @@ class Root(object):
     @cherrypy.expose
     def get_cover_art(self, file_hash):
         item = self.find_item(file_hash)
-        info = MP3(item["path"])
+        filename, file_extension = os.path.splitext(item["filename"])
+
         try:
             file = File(item["path"])
-            artwork = file.tags['APIC:'].data
-            cherrypy.response.headers['Content-Type'] = "image/jpeg"
+            artwork = None
+            if file_extension == ".m4a":
+                artwork = file.tags["data"]["tag"][0]
+            if file_extension == ".mp3":
+                artwork = file.tags['APIC:'].data
+
+            cherrypy.response.headers['Content-Type'] = file.tags['APIC:'].mime
         except:
             artwork = None
             
@@ -117,7 +123,6 @@ class Root(object):
         result = {}
 
         for library in libraries.iteritems():
-            print library
             for item in library[1]["library"]:
                 if item["hash"] == file_hash:
                     result = item
