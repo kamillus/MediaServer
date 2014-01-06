@@ -81,10 +81,15 @@ class Root(object):
                 artwork = file.tags['APIC:'].data
 
             cherrypy.response.headers['Content-Type'] = file.tags['APIC:'].mime
+            return artwork
+
         except:
-            artwork = None
+            settings = Settings()
+            placeholder = settings.get_placeholder_image()
+
+            ph = open(placeholder, 'rb') 
+            return self.file_generator(ph)
             
-        return artwork
 
     @cherrypy.expose  
     def stream_file(self, file_hash):

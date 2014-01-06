@@ -39,8 +39,8 @@
     </div>
     <div class="col-md-4">
       <h3>Files</h3>
-      <ul class="list-group">
-        <li class="list-group-item"><a href ng-click="go_back()">Back</a></li>
+      <a class="btn btn-info btn-xs" href ng-click="go_back()"> <span class="glyphicon glyphicon-circle-arrow-left"></span> Back</a><br/><br/>
+      <ul class="list-group"> 
         <li class="list-group-item" ng-repeat="(item_key, item) in listing">
           <a ng-show="item.type=='directory'" href ng-click="find_files(item.directory)">{{item.directory}}</a>
           <a ng-show="item.type=='file'" href ng-click="set_current_item(item)">{{item.filename}}</a>

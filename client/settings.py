@@ -54,6 +54,16 @@ class Settings(object):
             
         self.file_paths = self.settings["file_paths"]
 
+    def get_placeholder_image(self):
+        placeholder = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "..", "static", "images", "lorempixel.jpg"))
+
+        if not os.path.exists(placeholder):
+            placeholder = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "../..", "static", "images", "lorempixel.jpg"))    
+        if not os.path.exists(placeholder):
+            placeholder = os.path.abspath(os.path.join(os.path.dirname( __file__ ), "static", "images", "lorempixel.jpg")) 
+
+        return placeholder 
+
     def write_config_settings(self):
         try:
             print self.settings["file_paths"]
