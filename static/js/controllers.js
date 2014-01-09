@@ -217,10 +217,10 @@ controllers.controller('DirectoryListController', ['$scope', '$http', 'media_lib
           }
 
           //Windows paths - I really have to make this sript path separator independent
-          if(path + "\\" == item.directory)
+          if(path == item.directory)
           {
             item_with_type = item
-            item_with_type["directory"] = item["directory"].replace("/", "\\")
+            item_with_type["directory"] = item["directory"].split("/").join("\\")
             item_with_type["type"] = "file"
             $scope.listing.push(item)             
           }
@@ -237,10 +237,11 @@ controllers.controller('DirectoryListController', ['$scope', '$http', 'media_lib
             $scope.listing.push({directory:directory, type:"directory"})
           }
 
-          console.log(new RegExp(path + ".+?\\\\",'g'))
           if(windows && path[path.length-1] != "\\")
             path += "\\"
           matches_win = item.directory.match(new RegExp(path.split("\\").join("\\\\") + ".+?\\\\",'g'))
+          console.log(path + "----" + item.directory)
+
           if(matches_win && matches_win[0] && !$scope.found_dirs[matches_win[0]])
           {
             directory = matches_win[0].substring(0, matches_win[0].length - 1);
