@@ -42,7 +42,7 @@
 		<p>Sorted by {{column}}</p>
 		<div ng-if="loading">Loading..</div>
 		<ul class="list-group" ng-repeat="(library_key, library) in libraries">
-			<li class="list-group-item" ng-repeat="(item_key, item) in library.library | filter:search.query | limitTo:50 | orderBy:predicate">
+			<li class="list-group-item" ng-repeat="(item_key, item) in library.library | filter:search.query | limitTo:200 | orderBy:predicate">
 				<a href="#/videos/{{item.hash}}" ng-click="loading=true">
 					<div ng-show="loading">Loading..</div>
 					<h4 class="list-group-item-heading">{{item.filename}}</h4>

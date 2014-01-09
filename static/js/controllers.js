@@ -195,10 +195,19 @@ controllers.controller('DirectoryListController', ['$scope', '$http', 'media_lib
 
        angular.forEach($scope.libraries, function(library, library_key){
         angular.forEach(library.library, function(item, item_key){
-          if(item.directory[item.directory.length - 1] != "/")
+          os_match = item.directory.match(new RegExp(":\\\\"))
+          windows = false
+          
+          if(os_match && os_match[0] && !$scope.found_dirs[os_match[0]])
+            windows = true
+
+          if(item.directory[item.directory.length - 1] != "/" && !windows)
           {
             item.directory = item.directory + "/"
-          }  
+          }
+
+          if(item.directory[item.directory.length - 1] != "\\")
+             item.directory = item.directory + "\\" 
 
           if(path + "/" == item.directory)
           {
@@ -206,14 +215,38 @@ controllers.controller('DirectoryListController', ['$scope', '$http', 'media_lib
             item_with_type["type"] = "file"
             $scope.listing.push(item) 
           }
-          //console.log(new RegExp(path + "\/" + ".+?\/",'g') + " " + item.directory)
+
+          //Windows paths - I really have to make this sript path separator independent
+          if(path + "\\" == item.directory)
+          {
+            item_with_type = item
+            item_with_type["directory"] = item["directory"].replace("/", "\\")
+            item_with_type["type"] = "file"
+            $scope.listing.push(item)             
+          }
+
           matches = item.directory.match(new RegExp(path + "\/" + ".+?\/",'g'))
+          
+
           if(matches && matches[0] && !$scope.found_dirs[matches[0]])
           {
             directory = matches[0].substring(0, matches[0].length - 1);
 
             $scope.back = ""
             $scope.found_dirs[matches[0]] = true
+            $scope.listing.push({directory:directory, type:"directory"})
+          }
+
+          console.log(new RegExp(path + ".+?\\\\",'g'))
+          if(windows && path[path.length-1] != "\\")
+            path += "\\"
+          matches_win = item.directory.match(new RegExp(path.split("\\").join("\\\\") + ".+?\\\\",'g'))
+          if(matches_win && matches_win[0] && !$scope.found_dirs[matches_win[0]])
+          {
+            directory = matches_win[0].substring(0, matches_win[0].length - 1);
+
+            $scope.back = ""
+            $scope.found_dirs[matches_win[0]] = true
             $scope.listing.push({directory:directory, type:"directory"})
           }
         })

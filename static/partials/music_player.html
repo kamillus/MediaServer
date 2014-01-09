@@ -4,7 +4,7 @@
 	<div ng-show="playlist_empty"></div>
 	<ul class="list-group">
 		<li  class="list-group-item" ng-repeat="item in playlist track by $index">
-	  		<a href="#"><span class="glyphicon glyphicon-play"></span> {{item.filename}}</a> <a href ng-click="play(item.hash)">Play</a> <a ng-click="remove(item.hash)" href>Remove</a> 
+	  		<a href="#/videos/{{item.hash}}"><span class="glyphicon glyphicon-play"></span> {{item.filename}}</a> <a href ng-click="play(item.hash)">Play</a> <a ng-click="remove(item.hash)" href>Remove</a> 
 	  	</li>
 	</ul>
 	</div>
